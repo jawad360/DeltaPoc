@@ -1,5 +1,7 @@
 const functions = require('firebase-functions');
 const firebase = require('firebase-admin');
+const jQuery = require("jquery");
+
 const firebaseApp = firebase.initializeApp(
     functions.config().firebase
 );
@@ -23,12 +25,64 @@ exports.value_activity_game = functions.https.onRequest((request, response) => {
     response.send(oResponsePayload);
 });
 
-exports.save_value_activity = functions.https.onRequest((request, response) => {
+exports.save_daily_check_in = functions.https.onRequest((request, response) => {
     var oPayload = request.body;
     var oMemory = oPayload.conversation && oPayload.conversation.memory;
     var uid = oPayload.conversation.id;
+    var sGreatString = oMemory.great;
     setUserRef(uid);
-    var oPayload = {
+    var oDataPayload = {
+        "feeling_great" : sGreatString
+    };
+    userRef.child('daily_check_in').set(oDataPayload).then(() => {
+        var oResponsePayload = {
+            "replies" : [{
+                "type": "text",
+                "content": "Thanks for entering your career values"
+              }],
+            "conversation" : {}
+        };
+        oResponsePayload.conversation = oPayload.conversation;
+        response.send(oResponsePayload);
+    }, () => {
+
+    });
+    response.send();
+});
+
+exports.get_daily_check_in = functions.https.onRequest((request, response) => {
+    var oPayload = request.body;
+    var uid = oPayload.conversation && oPayload.conversation.id;
+    setUserRef(uid);
+    userRef.child('daily_check_in').child('feeling_great').once('value').then(snapshot => {
+        var sGreatString = snapshot.val();
+        var oResponsePayload = {
+            "replies" : [{
+                "type": "text",
+                "content": ""
+              }],
+            "conversation" : {}
+        };
+        oResponsePayload.conversation = oPayload.conversation;
+        if(oResponsePayload.conversation && oResponsePayload.conversation.memory){
+            oResponsePayload.conversation.memory.feeling_great = {
+                "raw": sGreatString
+            }
+            oResponsePayload.replies[0].content = sGreatString;
+        }
+        response.send(oResponsePayload);
+    }, () => {
+
+    });
+});
+
+exports.save_value_activity = functions.https.onRequest((request, response) => {
+    var oPayload = request.body;
+    var oMemory = oPayload.conversation && oPayload.conversation.memory;
+    console.log(oPayload);
+    var uid = oPayload.conversation && oPayload.conversation.id;
+    setUserRef(uid);
+    var oDataPayload = {
         "value1" : {
             "value" : oMemory.value1.raw,
             "priority" : oMemory.value_prio1.raw
@@ -50,17 +104,57 @@ exports.save_value_activity = functions.https.onRequest((request, response) => {
             "priority" : oMemory.value_prio5.raw
         } 
     }
-    userRef.child('career_value').set(oPayload).then(() => {
-
+    var sCareerString = getValuesString(oDataPayload);
+    userRef.child('career_value').child('career_value_game').set(oDataPayload).then(() => {
+        var oResponsePayload = {
+            "replies" : [{
+                "type": "text",
+                "content": ""
+              }],
+            "conversation" : {}
+        };
+        oResponsePayload.replies[0].content = sCareerString;
+        oResponsePayload.conversation = oPayload.conversation;
+        response.send(oResponsePayload);
     }, () => {
 
     });
-
+    response.send();
 });
+
+exports.get_value_activity = functions.https.onRequest((request, response) => {
+    var oPayload = request.body;
+    var uid = oPayload.conversation && oPayload.conversation.id;
+    setUserRef(uid);
+    userRef.child('career_value').child('career_value_game').once('value').then(snapshot => {
+        var oResponsePayload = {
+            "replies" : [{
+                "type": "text",
+                "content": ""
+              }],
+            "conversation" : {}
+        };
+        var sValueString = getValuesString(snapshot.val());
+        oResponsePayload.conversation = oPayload.conversation;
+        oResponsePayload.replies[0].content = sValueString;
+        response.send(oResponsePayload);
+    }, () => {
+
+    });
+    response.send();
+});
+
 var userRef = null;
 setUserRef = (uid) => {
     userRef = firebaseApp.database().ref(uid);
 };
+
+getValuesString = function(oCareerValues){
+    var sCareerString = "";
+    jQuery.each(oCareerValues, function(index, oValue){
+        sCareerString = sCareerString + `You Selected ${oValue.value} as ${oValue.priority}\n`; 
+    })
+}
 
 getButtonList = function(oCareerValues){
     var aButtons = [];
