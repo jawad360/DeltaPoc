@@ -8,7 +8,31 @@
     ],
     "rewrites": [
       {
-        "source": "/saveTestCase",
+        "source": "/value_activity_game",
+        "function": "app"
+      },
+      {
+        "source": "/save_daily_check_in",
+        "function": "app"
+      },
+      {
+        "source": "/get_daily_check_in",
+        "function": "app"
+      },
+      {
+        "source": "/save_explicit_career_values",
+        "function": "app"
+      },
+      {
+        "source": "/get_explicit_career_values",
+        "function": "app"
+      },
+      {
+        "source": "/save_value_activity",
+        "function": "app"
+      },
+      {
+        "source": "/get_value_activity",
         "function": "app"
       }
     ],

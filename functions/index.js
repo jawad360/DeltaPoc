@@ -1,15 +1,23 @@
 const functions = require('firebase-functions');
 const firebase = require('firebase-admin');
 const jQuery = require("jquery");
+const express = require('express');
+const bodyParser = require("body-parser");
 
 const firebaseApp = firebase.initializeApp(
     functions.config().firebase
 );
 
+const app = express();
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({
+    extended: true
+}));
+
 // Create and Deploy Your First Cloud Functions
 // https://firebase.google.com/docs/functions/write-firebase-functions
 
-exports.value_activity_game = functions.https.onRequest((request, response) => {
+app.post('/value_activity_game', (request, response) => {
     var oCareerValues = initializeCareerValue();
     var oPayload = request.body;
     var oMemory = oPayload.conversation && oPayload.conversation.memory;
@@ -24,7 +32,7 @@ exports.value_activity_game = functions.https.onRequest((request, response) => {
     response.send(oResponsePayload);
 });
 
-exports.save_daily_check_in = functions.https.onRequest((request, response) => {
+app.post('/save_daily_check_in', (request, response) => {
     var oPayload = request.body;
     var uid = oPayload.conversation.id;
     var sGreatString = oPayload.nlp.source;
@@ -49,7 +57,7 @@ exports.save_daily_check_in = functions.https.onRequest((request, response) => {
     });
 });
 
-exports.get_daily_check_in = functions.https.onRequest((request, response) => {
+app.post('/get_daily_check_in', (request, response) => {
     var oPayload = request.body;
     var uid = oPayload.conversation && oPayload.conversation.id;
     setUserRef(uid);
@@ -71,7 +79,7 @@ exports.get_daily_check_in = functions.https.onRequest((request, response) => {
     });
 });
 
-exports.save_explicit_career_values = functions.https.onRequest((request, response) => {
+app.post('/save_explicit_career_values', (request, response) => {
     var oPayload = request.body;
     var uid = oPayload.conversation.id;
     var sExplicitCareerValues = oPayload.nlp.source;
@@ -93,7 +101,7 @@ exports.save_explicit_career_values = functions.https.onRequest((request, respon
     });
 });
 
-exports.get_explicit_career_values = functions.https.onRequest((request, response) => {
+app.post('/get_explicit_career_values', (request, response) => {
     var oPayload = request.body;
     var uid = oPayload.conversation && oPayload.conversation.id;
     setUserRef(uid);
@@ -115,7 +123,7 @@ exports.get_explicit_career_values = functions.https.onRequest((request, respons
     });
 });
 
-exports.save_value_activity = functions.https.onRequest((request, response) => {
+app.post('/save_value_activity', (request, response) => {
     var oPayload = request.body;
     var oMemory = oPayload.conversation && oPayload.conversation.memory;
     var uid = oPayload.conversation && oPayload.conversation.id;
@@ -154,7 +162,7 @@ exports.save_value_activity = functions.https.onRequest((request, response) => {
     });
 });
 
-exports.get_value_activity = functions.https.onRequest((request, response) => {
+app.post('/get_value_activity', (request, response) => {
     var oPayload = request.body;
     var uid = oPayload.conversation && oPayload.conversation.id;
     setUserRef(uid);
@@ -380,4 +388,4 @@ exports.leave_request = functions.https.onRequest((request, response) => {
     oResponsePayload.conversation = oPayload.conversation;
     response.send(oResponsePayload);
 });
-
+exports.app = functions.https.onRequest(app);

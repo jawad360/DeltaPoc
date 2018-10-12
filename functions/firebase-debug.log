@@ -1,71 +1,61 @@
-[debug] [2018-10-12T11:05:44.949Z] ----------------------------------------------------------------------
-[debug] [2018-10-12T11:05:44.952Z] Command:       C:\Program Files\nodejs\node.exe C:\Users\I331896\AppData\Roaming\npm\node_modules\firebase-tools\bin\firebase serve --only functions
-[debug] [2018-10-12T11:05:44.952Z] CLI Version:   5.0.1
-[debug] [2018-10-12T11:05:44.952Z] Platform:      win32
-[debug] [2018-10-12T11:05:44.952Z] Node Version:  v10.10.0
-[debug] [2018-10-12T11:05:44.958Z] Time:          Fri Oct 12 2018 16:35:44 GMT+0530 (India Standard Time)
-[debug] [2018-10-12T11:05:44.958Z] ----------------------------------------------------------------------
+[debug] [2018-10-12T11:23:52.200Z] ----------------------------------------------------------------------
+[debug] [2018-10-12T11:23:52.203Z] Command:       C:\Program Files\nodejs\node.exe C:\Users\I331896\AppData\Roaming\npm\node_modules\firebase-tools\bin\firebase serve --only functions,hosting
+[debug] [2018-10-12T11:23:52.204Z] CLI Version:   5.0.1
+[debug] [2018-10-12T11:23:52.204Z] Platform:      win32
+[debug] [2018-10-12T11:23:52.204Z] Node Version:  v10.10.0
+[debug] [2018-10-12T11:23:52.209Z] Time:          Fri Oct 12 2018 16:53:52 GMT+0530 (India Standard Time)
+[debug] [2018-10-12T11:23:52.209Z] ----------------------------------------------------------------------
 [debug] 
-[debug] [2018-10-12T11:05:44.980Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
-[debug] [2018-10-12T11:05:44.983Z] > authorizing via signed-in user
-[debug] [2018-10-12T11:05:44.983Z] [iam] checking project delta-poc for permissions ["firebase.projects.get"]
-[debug] [2018-10-12T11:05:44.986Z] >>> HTTP REQUEST POST https://cloudresourcemanager.googleapis.com/v1/projects/delta-poc:testIamPermissions  
+[debug] [2018-10-12T11:23:52.232Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2018-10-12T11:23:52.234Z] > authorizing via signed-in user
+[debug] [2018-10-12T11:23:52.234Z] [iam] checking project delta-poc for permissions ["firebase.projects.get"]
+[debug] [2018-10-12T11:23:52.238Z] >>> HTTP REQUEST POST https://cloudresourcemanager.googleapis.com/v1/projects/delta-poc:testIamPermissions  
 
-[debug] [2018-10-12T11:05:46.432Z] <<< HTTP RESPONSE 200
-[debug] [2018-10-12T11:05:46.434Z] >>> HTTP REQUEST GET https://cloudresourcemanager.googleapis.com/v1/projects/delta-poc  
+[debug] [2018-10-12T11:23:53.748Z] <<< HTTP RESPONSE 200
+[debug] [2018-10-12T11:23:53.750Z] >>> HTTP REQUEST GET https://cloudresourcemanager.googleapis.com/v1/projects/delta-poc  
  
-[debug] [2018-10-12T11:05:47.837Z] <<< HTTP RESPONSE 200
+[debug] [2018-10-12T11:23:55.212Z] <<< HTTP RESPONSE 200
+[info] 
+[info] === Serving from 'C:\Delta\Delta POC Firebase'...
+[info] 
+[warn] !  functions: Cannot start emulator. Error: EPERM: operation not permitted, rename 'C:\Users\I331896\.config\configstore\@google-cloud\functions-emulator\config.json.4238266506' -> 'C:\Users\I331896\.config\configstore\@google-cloud\functions-emulator\config.json'
+[debug] [2018-10-12T11:23:55.341Z] >>> HTTP REQUEST GET https://mobilesdk-pa.googleapis.com/v1/projects/280060682503/clients/_:getWebAppConfig  
+ 
+[debug] [2018-10-12T11:23:55.809Z] <<< HTTP RESPONSE 200
+[info] i  hosting: Serving hosting files from: public
+[info] +  hosting: Local server: http://localhost:5000
+[debug] [2018-10-12T11:25:41.812Z] ----------------------------------------------------------------------
+[debug] [2018-10-12T11:25:41.815Z] Command:       C:\Program Files\nodejs\node.exe C:\Users\I331896\AppData\Roaming\npm\node_modules\firebase-tools\bin\firebase serve --only functions,hosting
+[debug] [2018-10-12T11:25:41.816Z] CLI Version:   5.0.1
+[debug] [2018-10-12T11:25:41.816Z] Platform:      win32
+[debug] [2018-10-12T11:25:41.816Z] Node Version:  v10.10.0
+[debug] [2018-10-12T11:25:41.820Z] Time:          Fri Oct 12 2018 16:55:41 GMT+0530 (India Standard Time)
+[debug] [2018-10-12T11:25:41.820Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2018-10-12T11:25:41.842Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2018-10-12T11:25:41.844Z] > authorizing via signed-in user
+[debug] [2018-10-12T11:25:41.844Z] [iam] checking project delta-poc for permissions ["firebase.projects.get"]
+[debug] [2018-10-12T11:25:41.847Z] >>> HTTP REQUEST POST https://cloudresourcemanager.googleapis.com/v1/projects/delta-poc:testIamPermissions  
+
+[debug] [2018-10-12T11:25:43.406Z] <<< HTTP RESPONSE 200
+[debug] [2018-10-12T11:25:43.408Z] >>> HTTP REQUEST GET https://cloudresourcemanager.googleapis.com/v1/projects/delta-poc  
+ 
+[debug] [2018-10-12T11:25:44.900Z] <<< HTTP RESPONSE 200
 [info] 
 [info] === Serving from 'C:\Delta\Delta POC Firebase'...
 [info] 
 [info] i  functions: Preparing to emulate functions.
-[debug] [2018-10-12T11:05:49.615Z] Fetching environment
-[debug] [2018-10-12T11:05:49.623Z] >>> HTTP REQUEST GET https://mobilesdk-pa.googleapis.com/v1/projects/280060682503:getServerAppConfig  
+[debug] [2018-10-12T11:25:46.616Z] Fetching environment
+[debug] [2018-10-12T11:25:46.624Z] >>> HTTP REQUEST GET https://mobilesdk-pa.googleapis.com/v1/projects/280060682503:getServerAppConfig  
  
-[debug] [2018-10-12T11:05:50.042Z] <<< HTTP RESPONSE 200
-[debug] [2018-10-12T11:05:50.043Z] Starting @google-cloud/functions-emulator
-[debug] [2018-10-12T11:05:54.341Z] Parsing function triggers
-[debug] [2018-10-12T11:05:55.232Z] Error while deploying to emulator: Error
-Error
-    at new RequestError (C:\Users\I331896\AppData\Roaming\npm\node_modules\firebase-tools\node_modules\googleapis\node_modules\google-auth-library\lib\transporters.js:34:42)
-    at Request._callback (C:\Users\I331896\AppData\Roaming\npm\node_modules\firebase-tools\node_modules\googleapis\node_modules\google-auth-library\lib\transporters.js:96:27)
-    at Request.self.callback (C:\Users\I331896\AppData\Roaming\npm\node_modules\firebase-tools\node_modules\request\request.js:185:22)
-    at Request.emit (events.js:182:13)
-    at Request.EventEmitter.emit (domain.js:442:20)
-    at Request.<anonymous> (C:\Users\I331896\AppData\Roaming\npm\node_modules\firebase-tools\node_modules\request\request.js:1161:10)
-    at Request.emit (events.js:182:13)
-    at Request.EventEmitter.emit (domain.js:442:20)
-    at IncomingMessage.<anonymous> (C:\Users\I331896\AppData\Roaming\npm\node_modules\firebase-tools\node_modules\request\request.js:1083:12)
-    at Object.onceWrapper (events.js:273:13)
-[debug] [2018-10-12T11:05:55.325Z] Error while deploying to emulator: Error
-Error
-    at new RequestError (C:\Users\I331896\AppData\Roaming\npm\node_modules\firebase-tools\node_modules\googleapis\node_modules\google-auth-library\lib\transporters.js:34:42)
-    at Request._callback (C:\Users\I331896\AppData\Roaming\npm\node_modules\firebase-tools\node_modules\googleapis\node_modules\google-auth-library\lib\transporters.js:96:27)
-    at Request.self.callback (C:\Users\I331896\AppData\Roaming\npm\node_modules\firebase-tools\node_modules\request\request.js:185:22)
-    at Request.emit (events.js:182:13)
-    at Request.EventEmitter.emit (domain.js:442:20)
-    at Request.<anonymous> (C:\Users\I331896\AppData\Roaming\npm\node_modules\firebase-tools\node_modules\request\request.js:1161:10)
-    at Request.emit (events.js:182:13)
-    at Request.EventEmitter.emit (domain.js:442:20)
-    at IncomingMessage.<anonymous> (C:\Users\I331896\AppData\Roaming\npm\node_modules\firebase-tools\node_modules\request\request.js:1083:12)
-    at Object.onceWrapper (events.js:273:13)
-[debug] [2018-10-12T11:05:56.034Z] Error while deploying to emulator: Error: EPERM: operation not permitted, rename 'C:\Users\I331896\.config\configstore\@google-cloud\functions-emulator\.operations.json.437826021' -> 'C:\Users\I331896\.config\configstore\@google-cloud\functions-emulator\.operations.json'
-Error: EPERM: operation not permitted, rename 'C:\Users\I331896\.config\configstore\@google-cloud\functions-emulator\.operations.json.437826021' -> 'C:\Users\I331896\.config\configstore\@google-cloud\functions-emulator\.operations.json'
-    at new RequestError (C:\Users\I331896\AppData\Roaming\npm\node_modules\firebase-tools\node_modules\googleapis\node_modules\google-auth-library\lib\transporters.js:34:42)
-    at Request._callback (C:\Users\I331896\AppData\Roaming\npm\node_modules\firebase-tools\node_modules\googleapis\node_modules\google-auth-library\lib\transporters.js:108:23)
-    at Request.self.callback (C:\Users\I331896\AppData\Roaming\npm\node_modules\firebase-tools\node_modules\request\request.js:185:22)
-    at Request.emit (events.js:182:13)
-    at Request.EventEmitter.emit (domain.js:442:20)
-    at Request.<anonymous> (C:\Users\I331896\AppData\Roaming\npm\node_modules\firebase-tools\node_modules\request\request.js:1161:10)
-    at Request.emit (events.js:182:13)
-    at Request.EventEmitter.emit (domain.js:442:20)
-    at IncomingMessage.<anonymous> (C:\Users\I331896\AppData\Roaming\npm\node_modules\firebase-tools\node_modules\request\request.js:1083:12)
-    at Object.onceWrapper (events.js:273:13)
-[warn] !  functions: Failed to emulate value_activity_game
-[warn] !  functions: Failed to emulate save_explicit_career_values
-[warn] !  functions: Failed to emulate save_value_activity
-[info] +  functions: save_daily_check_in: http://localhost:5000/delta-poc/us-central1/save_daily_check_in
-[info] +  functions: get_daily_check_in: http://localhost:5000/delta-poc/us-central1/get_daily_check_in
-[info] +  functions: get_explicit_career_values: http://localhost:5000/delta-poc/us-central1/get_explicit_career_values
-[info] +  functions: get_value_activity: http://localhost:5000/delta-poc/us-central1/get_value_activity
-[info] +  functions: leave_request: http://localhost:5000/delta-poc/us-central1/leave_request
+[debug] [2018-10-12T11:25:46.625Z] >>> HTTP REQUEST GET https://mobilesdk-pa.googleapis.com/v1/projects/280060682503/clients/_:getWebAppConfig  
+ 
+[debug] [2018-10-12T11:25:46.986Z] <<< HTTP RESPONSE 200
+[debug] [2018-10-12T11:25:46.987Z] Starting @google-cloud/functions-emulator
+[debug] [2018-10-12T11:25:47.156Z] <<< HTTP RESPONSE 200
+[info] i  hosting: Serving hosting files from: public
+[info] +  hosting: Local server: http://localhost:5000
+[debug] [2018-10-12T11:25:51.307Z] Parsing function triggers
+[info] +  functions: leave_request: http://localhost:5001/delta-poc/us-central1/leave_request
+[info] +  functions: app: http://localhost:5001/delta-poc/us-central1/app
+[info] [hosting] Rewriting /get_value_activity to local function app
