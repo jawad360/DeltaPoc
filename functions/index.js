@@ -71,6 +71,50 @@ exports.get_daily_check_in = functions.https.onRequest((request, response) => {
     });
 });
 
+exports.save_explicit_career_values = functions.https.onRequest((request, response) => {
+    var oPayload = request.body;
+    var uid = oPayload.conversation.id;
+    var sExplicitCareerValues = oPayload.nlp.source;
+    setUserRef(uid);
+    userRef.child('career_value').child('explicit_career_values').set(sExplicitCareerValues).then(() => {
+        var oResponsePayload = {
+            "replies" : [],
+            "conversation" : {}
+        };
+        oResponsePayload.conversation = oPayload.conversation;
+        if(oResponsePayload.conversation && oResponsePayload.conversation.memory){
+            oResponsePayload.conversation.memory.explicit_career_values = {
+                "raw": sExplicitCareerValues
+            }
+        }
+        response.send(oResponsePayload);
+    }, () => {
+
+    });
+});
+
+exports.get_explicit_career_values = functions.https.onRequest((request, response) => {
+    var oPayload = request.body;
+    var uid = oPayload.conversation && oPayload.conversation.id;
+    setUserRef(uid);
+    userRef.child('career_value').child('explicit_career_values').once('value').then(snapshot => {
+        var sExplicitCareerValues = snapshot.val();
+        var oResponsePayload = {
+            "replies" : [],
+            "conversation" : {}
+        };
+        oResponsePayload.conversation = oPayload.conversation;
+        if(oResponsePayload.conversation && oResponsePayload.conversation.memory){
+            oResponsePayload.conversation.memory.explicit_career_values = {
+                "raw": sExplicitCareerValues
+            }
+        }
+        response.send(oResponsePayload);
+    }, () => {
+
+    });
+});
+
 exports.save_value_activity = functions.https.onRequest((request, response) => {
     var oPayload = request.body;
     var oMemory = oPayload.conversation && oPayload.conversation.memory;
