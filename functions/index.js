@@ -21,33 +21,32 @@ exports.value_activity_game = functions.https.onRequest((request, response) => {
     var aReplies = getButtonList(oCareerValues);
     oResponsePayload.replies = aReplies;
     oResponsePayload.conversation = oPayload.conversation;
-    console.log(JSON.stringify(oPayload, undefined, 2));
     response.send(oResponsePayload);
 });
 
 exports.save_daily_check_in = functions.https.onRequest((request, response) => {
     var oPayload = request.body;
-    var oMemory = oPayload.conversation && oPayload.conversation.memory;
     var uid = oPayload.conversation.id;
-    var sGreatString = oMemory.great;
+    var sGreatString = oPayload.nlp.source;
     setUserRef(uid);
     var oDataPayload = {
         "feeling_great" : sGreatString
     };
     userRef.child('daily_check_in').set(oDataPayload).then(() => {
         var oResponsePayload = {
-            "replies" : [{
-                "type": "text",
-                "content": "Thanks for entering your career values"
-              }],
+            "replies" : [],
             "conversation" : {}
         };
         oResponsePayload.conversation = oPayload.conversation;
+        if(oResponsePayload.conversation && oResponsePayload.conversation.memory){
+            oResponsePayload.conversation.memory.feeling_great = {
+                "raw": sGreatString
+            }
+        }
         response.send(oResponsePayload);
     }, () => {
 
     });
-    response.send();
 });
 
 exports.get_daily_check_in = functions.https.onRequest((request, response) => {
@@ -57,10 +56,7 @@ exports.get_daily_check_in = functions.https.onRequest((request, response) => {
     userRef.child('daily_check_in').child('feeling_great').once('value').then(snapshot => {
         var sGreatString = snapshot.val();
         var oResponsePayload = {
-            "replies" : [{
-                "type": "text",
-                "content": ""
-              }],
+            "replies" : [],
             "conversation" : {}
         };
         oResponsePayload.conversation = oPayload.conversation;
@@ -68,7 +64,6 @@ exports.get_daily_check_in = functions.https.onRequest((request, response) => {
             oResponsePayload.conversation.memory.feeling_great = {
                 "raw": sGreatString
             }
-            oResponsePayload.replies[0].content = sGreatString;
         }
         response.send(oResponsePayload);
     }, () => {
@@ -79,7 +74,6 @@ exports.get_daily_check_in = functions.https.onRequest((request, response) => {
 exports.save_value_activity = functions.https.onRequest((request, response) => {
     var oPayload = request.body;
     var oMemory = oPayload.conversation && oPayload.conversation.memory;
-    console.log(oPayload);
     var uid = oPayload.conversation && oPayload.conversation.id;
     setUserRef(uid);
     var oDataPayload = {
@@ -104,22 +98,16 @@ exports.save_value_activity = functions.https.onRequest((request, response) => {
             "priority" : oMemory.value_prio5.raw
         } 
     }
-    var sCareerString = getValuesString(oDataPayload);
     userRef.child('career_value').child('career_value_game').set(oDataPayload).then(() => {
         var oResponsePayload = {
-            "replies" : [{
-                "type": "text",
-                "content": ""
-              }],
+            "replies" : [],
             "conversation" : {}
         };
-        oResponsePayload.replies[0].content = sCareerString;
         oResponsePayload.conversation = oPayload.conversation;
         response.send(oResponsePayload);
     }, () => {
 
     });
-    response.send();
 });
 
 exports.get_value_activity = functions.https.onRequest((request, response) => {
@@ -128,33 +116,53 @@ exports.get_value_activity = functions.https.onRequest((request, response) => {
     setUserRef(uid);
     userRef.child('career_value').child('career_value_game').once('value').then(snapshot => {
         var oResponsePayload = {
-            "replies" : [{
-                "type": "text",
-                "content": ""
-              }],
+            "replies" : [],
             "conversation" : {}
         };
-        var sValueString = getValuesString(snapshot.val());
+        var oDataPayload = snapshot.val();
         oResponsePayload.conversation = oPayload.conversation;
-        oResponsePayload.replies[0].content = sValueString;
+        if(oResponsePayload.conversation && oResponsePayload.conversation.memory){
+            oResponsePayload.conversation.memory.value1 = {
+                "raw": oDataPayload.value1.value
+            }
+            oResponsePayload.conversation.memory.value2 = {
+                "raw": oDataPayload.value2.value
+            }
+            oResponsePayload.conversation.memory.value3 = {
+                "raw": oDataPayload.value3.value
+            }
+            oResponsePayload.conversation.memory.value4 = {
+                "raw": oDataPayload.value4.value
+            }
+            oResponsePayload.conversation.memory.value5 = {
+                "raw": oDataPayload.value5.value
+            }
+            oResponsePayload.conversation.memory.value_prio1 = {
+                "raw": oDataPayload.value1.priority
+            }
+            oResponsePayload.conversation.memory.value_prio2 = {
+                "raw": oDataPayload.value2.priority
+            }
+            oResponsePayload.conversation.memory.value_prio3 = {
+                "raw": oDataPayload.value3.priority
+            }
+            oResponsePayload.conversation.memory.value_prio4 = {
+                "raw": oDataPayload.value4.priority
+            }
+            oResponsePayload.conversation.memory.value_prio5 = {
+                "raw": oDataPayload.value5.priority
+            }
+        }
         response.send(oResponsePayload);
     }, () => {
 
     });
-    response.send();
 });
 
 var userRef = null;
 setUserRef = (uid) => {
     userRef = firebaseApp.database().ref(uid);
 };
-
-getValuesString = function(oCareerValues){
-    var sCareerString = "";
-    jQuery.each(oCareerValues, function(index, oValue){
-        sCareerString = sCareerString + `You Selected ${oValue.value} as ${oValue.priority}\n`; 
-    })
-}
 
 getButtonList = function(oCareerValues){
     var aButtons = [];
